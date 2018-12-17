@@ -1,0 +1,35 @@
+{
+  "pages": [
+    "pages/video/main",
+    "pages/box/main",
+    "pages/mine/main" ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#ffffff",
+    "navigationStyle": "custom"
+  },
+  "tabBar": {
+    "color": "#000000",
+    "selectedColor": "#d54321",
+    "list": [
+      {
+        "pagePath": "pages/video/main",
+        "iconPath": "static/tabbar/tab-video0.png",
+        "selectedIconPath": "static/tabbar/tab-video1.png",
+        "text": "视频"
+      },
+      {
+        "pagePath": "pages/box/main",
+        "iconPath": "static/tabbar/tab-box0.png",
+        "selectedIconPath": "static/tabbar/tab-box1.png",
+        "text": "展柜"
+      },
+      {
+        "pagePath": "pages/mine/main",
+        "iconPath": "static/tabbar/tab-mine0.png",
+        "selectedIconPath": "static/tabbar/tab-mine1.png",
+        "text": "我的"
+      }
+    ]
+  }
+}
