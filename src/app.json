@@ -2,11 +2,24 @@
   "pages": [
     "pages/video/main",
     "pages/box/main",
-    "pages/mine/main" ],
+    "pages/mine/main",
+    "pages/videoDetail/main",
+    "pages/boxDetail/main",
+    "pages/argeement/main",
+    "pages/forgotPassword/main",
+    "pages/login/main",
+    "pages/loginAccount/main",
+    "pages/mineAbout/main",
+    "pages/mineHistory/main",
+    "pages/mineVant/main",
+    "pages/register/main",
+    "pages/search/main" ],
   "window": {
-    "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#ffffff",
-    "navigationStyle": "custom"
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "摆玩视频",
+    "backgroundColor": "#ffffff",
+    "backgroundTextStyle": "light"
   },
   "tabBar": {
     "color": "#000000",

@@ -1,13 +1,10 @@
 <template>
   <div class="container">
-    <only-title cutitle="我的"></only-title>
     <div>{{motto}}</div>
   </div>
 </template>
 
 <script>
-import onlyTitle from '@/components/navigation/title.vue'
-
 export default {
   data () {
     return {
@@ -17,7 +14,6 @@ export default {
   },
 
   components: {
-    onlyTitle
   },
 
   methods: {},
