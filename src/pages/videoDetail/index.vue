@@ -27,7 +27,7 @@
       <div class="action">
         <div class="a-box">
           <div @click.stop="clickVant" class="a-b-item a-b-item-1">
-            <img v-if="!videoInfo.isVanted" src="./../../assets/images/video/vant-ico-0.png" alt="">
+            <img v-if="!cVideoInfo.isVanted" src="./../../assets/images/video/vant-ico-0.png" alt="">
             <img v-else src="./../../assets/images/video/vant-ico.png" alt="">
             <div class="a-i-v-num">99+</div>
           </div>
@@ -85,10 +85,12 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   data () {
     return {
       videoId: null,
+      videoIndex: null,
       videoInfo: {id: 1, isVanted: false},
       comments: [{id: 1, isVanted: false}, {id: 1, isVanted: true}, {id: 1, isVanted: false}],
       isPlaying: false
@@ -97,11 +99,19 @@ export default {
 
   components: {
   },
+  computed: {
+    ...mapState([
+      'videoList'
+    ]),
+    cVideoInfo () {
+      return this.videoList[this.videoIndex]
+    }
+  },
 
   onLoad (query) {
     console.log('onLoad', query)
-    let info = JSON.parse(query.videoInfo)
-    this.videoId = info.id
+    let info = query.videoIndex
+    this.videoIndex = parseInt(info)
   },
   onUnload () {
     this.isPlaying = false
@@ -117,7 +127,7 @@ export default {
       this.isPlaying = true
     },
     clickVant () {
-      let indexItem = this.videoInfo
+      let indexItem = this.cVideoInfo
       if (typeof indexItem.isVanted === 'boolean') {
         indexItem.isVanted = !indexItem.isVanted
         if (indexItem.isVanted) {
@@ -129,7 +139,11 @@ export default {
         indexItem.isVanted = true
         this.showToast('点赞成功！')
       }
-      this.videoInfo = indexItem
+      // this.videoInfo = indexItem
+      this.$store.dispatch('updateVideoList', {
+        index: this.videoIndex,
+        indexItem
+      })
     },
     clickComment () {
       this.showToast('评论了！')

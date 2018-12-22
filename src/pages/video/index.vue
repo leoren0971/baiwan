@@ -18,7 +18,7 @@
     <!-- list -->
     <div class="video-list">
       <h3>精选视频</h3>
-      <div class="video-item" v-for="(item, index) in list" :key="index">
+      <div class="video-item" v-for="(item, index) in videoList" :key="index">
         <div class="v-i-box">
           <video
             v-if="isPlaying&&playIndex===index"
@@ -31,7 +31,7 @@
           <div class="video-duration">03:00</div>
           <div @click="toPlay(index)" class="video-player"><img class="p-ico" src="./../../assets/images/video/player-btn.png" alt=""></div>
         </div>
-        <div @click="toVideoDetail(item)" class="v-i-info">
+        <div @click="toVideoDetail(index)" class="v-i-info">
           <div class="avatar">
             <img src="./../../assets/images/ls/avatar.png" alt="">
           </div>
@@ -47,11 +47,11 @@
               <div @click.stop="clickVant(item, index)" class="a-b-item a-b-item-1">
                 <img v-if="!item.isVanted" src="./../../assets/images/video/vant-ico-0.png" alt="">
                 <img v-else src="./../../assets/images/video/vant-ico.png" alt="">
-                <div class="a-i-v-num">99+</div>
+                <div class="a-i-v-num">9999w</div>
               </div>
               <div @click.stop="clickComment" class="a-b-item">
                 <img src="./../../assets/images/video/comment.png" alt="">
-                <div class="a-i-v-num">999+</div>
+                <div class="a-i-v-num">200w</div>
               </div>
               <div @click.stop="clickShare" class="a-b-item a-b-item-s">
                 <img src="./../../assets/images/video/share-ico.png" alt="">
@@ -68,6 +68,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   data () {
     return {
@@ -100,12 +101,18 @@ export default {
 
   created () {
   },
+  computed: {
+    ...mapState([
+      'videoList'
+    ])
+  },
   onReachBottom () {
     // 触底
     console.log('触底了')
     let length = this.list.length
     let addlist = [{id: length + 1}, {id: length + 2}, {id: length + 3}]
-    this.list = this.list.concat(addlist)
+    // this.list = this.list.concat(addlist)
+    this.$store.dispatch('getVideoList', this.videoList.concat(addlist))
   },
 
   methods: {
@@ -130,7 +137,11 @@ export default {
         indexItem.isVanted = true
         this.showToast('点赞成功！')
       }
-      this.list.splice(index, 1, indexItem)
+      // this.list.splice(index, 1, indexItem)
+      this.$store.dispatch('updateVideoList', {
+        index,
+        indexItem
+      })
     },
     clickComment () {
       this.showToast('评论了！')

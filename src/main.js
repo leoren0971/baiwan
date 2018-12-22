@@ -1,8 +1,10 @@
 import Vue from 'vue'
 import App from './App'
+import store from './store'
 
 Vue.config.productionTip = false
 App.mpType = 'app'
+Vue.prototype.$store = store
 
 const app = new Vue(App)
 app.$mount()
@@ -18,8 +20,8 @@ Vue.mixin({
     toSearch () {
       this.navigatePageTo('../search/main')
     },
-    toVideoDetail (obj) {
-      this.navigatePageTo('../videoDetail/main?videoInfo=' + JSON.stringify(obj))
+    toVideoDetail (index) {
+      this.navigatePageTo('../videoDetail/main?videoIndex=' + index)
     },
     myDialog (options, callback, callback2) {
       wx.showModal({
