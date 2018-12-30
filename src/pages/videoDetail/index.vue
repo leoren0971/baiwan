@@ -14,7 +14,7 @@
       <div v-if="!isPlaying" @click="toPlay()" class="video-player"><img class="p-ico" src="./../../assets/images/video/player-btn.png" alt=""></div>
     </div>
     
-    <div @click="toVideoDetail(item)" class="v-i-info">
+    <div class="v-i-info">
       <div class="avatar">
         <img src="./../../assets/images/ls/avatar.png" alt="">
       </div>
@@ -41,7 +41,6 @@
         </div>
       </div>
     </div>
-
     <div class="video-detail">
       <div class="title">
         <span class="t-title">钛合金机身简直无敌秀</span>
@@ -139,7 +138,6 @@ export default {
         indexItem.isVanted = true
         this.showToast('点赞成功！')
       }
-      // this.videoInfo = indexItem
       this.$store.dispatch('updateVideoList', {
         index: this.videoIndex,
         indexItem
@@ -352,7 +350,7 @@ export default {
 
               > img {
                 width: 23px;
-                height: 20px;
+                height: 18px;
               }
               .a-i-v-num {
                 font-size: 11px;

@@ -23,6 +23,9 @@ Vue.mixin({
     toVideoDetail (index) {
       this.navigatePageTo('../videoDetail/main?videoIndex=' + index)
     },
+    toBoxDetail (index) {
+      this.navigatePageTo('../boxDetail/main?boxIndex=' + index)
+    },
     myDialog (options, callback, callback2) {
       wx.showModal({
         title: options.title,

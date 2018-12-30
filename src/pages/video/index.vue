@@ -64,11 +64,13 @@
         </div>
       </div>
     </div>
+    <video-share ref="videoShare"></video-share>
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
+import videoShare from './../../components/shareCard/videoShare'
 export default {
   data () {
     return {
@@ -81,22 +83,13 @@ export default {
       autoplay: true,
       interval: 5000,
       duration: 300,
-      list: [{id: 1, isVanted: true}, {id: 2}, {id: 3}, {id: 4}, {id: 5}, {id: 6}, {id: 7}, {id: 8}],
       isPlaying: false,
-      playIndex: null,
-      danmuList: [{
-        text: '第 1s 出现的弹幕',
-        color: '#ff0000',
-        time: 1
-      }, {
-        text: '第 3s 出现的弹幕',
-        color: '#ff00ff',
-        time: 3
-      }]
+      playIndex: null
     }
   },
 
   components: {
+    videoShare
   },
 
   created () {
@@ -108,10 +101,8 @@ export default {
   },
   onReachBottom () {
     // 触底
-    console.log('触底了')
-    let length = this.list.length
+    let length = this.$store.state.videoList.length
     let addlist = [{id: length + 1}, {id: length + 2}, {id: length + 3}]
-    // this.list = this.list.concat(addlist)
     this.$store.dispatch('getVideoList', this.videoList.concat(addlist))
   },
 
@@ -137,7 +128,6 @@ export default {
         indexItem.isVanted = true
         this.showToast('点赞成功！')
       }
-      // this.list.splice(index, 1, indexItem)
       this.$store.dispatch('updateVideoList', {
         index,
         indexItem
@@ -147,7 +137,7 @@ export default {
       this.showToast('评论了！')
     },
     clickShare () {
-      this.showToast('分享了！')
+      this.$refs.videoShare.show()
     }
   }
 }
@@ -292,7 +282,7 @@ export default {
 
               >img {
                 width: 16px;
-                height: 15px;
+                height: 13px;
               }
               .a-i-v-num {
                 font-size: 9px;
