@@ -13,78 +13,92 @@
       <div v-if="!isPlaying" class="video-duration">03:00</div>
       <div v-if="!isPlaying" @click="toPlay()" class="video-player"><img class="p-ico" src="./../../assets/images/video/player-btn.png" alt=""></div>
     </div>
-    
-    <div class="v-i-info">
-      <div class="avatar">
-        <img src="./../../assets/images/ls/avatar.png" alt="">
-      </div>
-      <div class="content">
-        <h4 class="c-title">钛合金高达玩个锤子</h4>
-        <div class="c-info">
-          <div class="c-i-user">2222粉丝</div>
+    <scroll-view
+      scroll-y
+      v-bind:style="{height: contHeight +'px', marginTop: 400 +'rpx'}"
+    >
+      <div class="v-i-info">
+        <div class="avatar">
+          <img src="./../../assets/images/ls/avatar.png" alt="">
         </div>
-      </div>
-      <div class="action">
-        <div class="a-box">
-          <div @click.stop="clickVant" class="a-b-item a-b-item-1">
-            <img v-if="!cVideoInfo.isVanted" src="./../../assets/images/video/vant-ico-0.png" alt="">
-            <img v-else src="./../../assets/images/video/vant-ico.png" alt="">
-            <div class="a-i-v-num">99+</div>
-          </div>
-          <div @click.stop="clickComment" class="a-b-item">
-            <img src="./../../assets/images/video/comment.png" alt="">
-            <div class="a-i-v-num">999+</div>
-          </div>
-          <div @click.stop="clickShare" class="a-b-item a-b-item-s">
-            <img src="./../../assets/images/video/share-ico.png" alt="">
+        <div class="content">
+          <h4 class="c-title">钛合金高达玩个锤子</h4>
+          <div class="c-info">
+            <div class="c-i-user">2222粉丝</div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="video-detail">
-      <div class="title">
-        <span class="t-title">钛合金机身简直无敌秀</span>
-        <span class="label">高达</span>
-        <span class="date">2018-11-7</span>
-      </div>
-      <div class="info">钛合金机身简直无敌秀钛合金机身简直无敌秀钛合金机身简直无 敌秀钛合金机身简直无敌秀钛合金机身简直无敌秀钛合金机身简 直无敌秀</div>
-    </div>
-    <div class="v-d-comment">
-      <div class="title">
-        <img src="./../../assets/images/video/comment-active.png" alt="">
-        <span>评论(12)</span>
-      </div>
-      <div class="c-list">
-        <div class="c-item" v-for="(item, index) in comments" :key="index">
-          <div class="c-i-t">
-            <div class="c-i-t-avatar">
-              <img src="./../../assets/images/ls/avatar.png" alt="">
-              <div class="c-i-t-ut">
-                <div class="user">小白兔</div>
-                <div class="c-time">12小时前</div>
-              </div>
+        <div class="action">
+          <div class="a-box">
+            <div @click.stop="clickVant" class="a-b-item a-b-item-1">
+              <img v-if="!cVideoInfo.isVanted" src="./../../assets/images/video/vant-ico-0.png" alt="">
+              <img v-else src="./../../assets/images/video/vant-ico.png" alt="">
+              <div class="a-i-v-num">99+</div>
             </div>
-            <div class="c-i-t-action">
-              <div class="c-a-item c-a-item-1">
-                <img v-if="!item.isVanted" src="./../../assets/images/video/vant-ico-0.png" alt="">
-                <img v-else src="./../../assets/images/video/vant-ico.png" alt="">
-                <div class="a-i-v-num">666</div>
-              </div>
-              <div class="c-a-item">
-                <img src="./../../assets/images/video/comment.png" alt="">
-                <div class="a-i-v-num">99</div>
-              </div>
+            <div @click.stop="clickComment" class="a-b-item">
+              <img src="./../../assets/images/video/comment.png" alt="">
+              <div class="a-i-v-num">999+</div>
+            </div>
+            <div @click.stop="clickShare" class="a-b-item a-b-item-s">
+              <img src="./../../assets/images/video/share-ico.png" alt="">
             </div>
           </div>
-          <div class="c-i-b">真的很喜欢，灰常稀饭真的很喜欢，灰常稀饭~</div>
         </div>
       </div>
-    </div>
+      <div class="video-detail">
+        <div class="title">
+          <span class="t-title">钛合金机身简直无敌秀</span>
+          <span class="label">高达</span>
+          <span class="date">2018-11-7</span>
+        </div>
+        <div class="info">钛合金机身简直无敌秀钛合金机身简直无敌秀钛合金机身简直无 敌秀钛合金机身简直无敌秀钛合金机身简直无敌秀钛合金机身简 直无敌秀</div>
+      </div>
+      <div class="v-d-comment">
+        <div class="title">
+          <img src="./../../assets/images/video/comment-active.png" alt="">
+          <span>评论(12)</span>
+        </div>
+        <div class="c-list">
+          <div class="c-item" v-for="(item, index) in comments" :key="index">
+            <div class="c-i-t">
+              <div class="c-i-t-avatar">
+                <img src="./../../assets/images/ls/avatar.png" alt="">
+                <div class="c-i-t-ut">
+                  <div class="user">小白兔</div>
+                  <div class="c-time">12小时前</div>
+                </div>
+              </div>
+              <div class="c-i-t-action">
+                <div class="c-a-item c-a-item-1">
+                  <img v-if="!item.isVanted" src="./../../assets/images/video/vant-ico-0.png" alt="">
+                  <img v-else src="./../../assets/images/video/vant-ico.png" alt="">
+                  <div class="a-i-v-num">666</div>
+                </div>
+                <div class="c-a-item">
+                  <img src="./../../assets/images/video/comment.png" alt="">
+                  <div class="a-i-v-num">99</div>
+                </div>
+              </div>
+            </div>
+            <div class="c-i-b">真的很喜欢，灰常稀饭真的很喜欢，灰常稀饭~</div>
+            <div v-for="(item, itemIndex) in comments" :key="itemIndex" class="c-i-b-rc">
+              <div class="c-rc-t">
+                <span class="r-user">小黑兔</span>
+                <span class="t-user">@小白兔</span>
+                <span class="r-time">2小时前</span>
+              </div>
+              <div class="c-rc-content">666666666</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </scroll-view>
+    <comment-input ref="commentInput" @submit="eventSubmitComment"></comment-input>
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
+import commentInput from '@/components/comment/commentInput'
 export default {
   data () {
     return {
@@ -92,11 +106,13 @@ export default {
       videoIndex: null,
       videoInfo: {id: 1, isVanted: false},
       comments: [{id: 1, isVanted: false}, {id: 1, isVanted: true}, {id: 1, isVanted: false}],
-      isPlaying: false
+      isPlaying: false,
+      contHeight: 624
     }
   },
 
   components: {
+    commentInput
   },
   computed: {
     ...mapState([
@@ -109,8 +125,11 @@ export default {
 
   onLoad (query) {
     console.log('onLoad', query)
+    console.log('doneWindowHeight', this.$store.getters.doneWindowHeight)
+    console.log('doneMyWindowHeight', this.$store.getters.doneMyWindowHeight)
     let info = query.videoIndex
     this.videoIndex = parseInt(info)
+    this.contHeight = this.$store.getters.doneWindowHeight - 180
   },
   onUnload () {
     this.isPlaying = false
@@ -144,10 +163,16 @@ export default {
       })
     },
     clickComment () {
-      this.showToast('评论了！')
+      this.$refs.commentInput.show()
+      this.contHeight = this.$store.getters.doneWindowHeight - 220
     },
     clickShare () {
       this.showToast('分享了！')
+    },
+    eventSubmitComment (content) {
+      this.$refs.commentInput.hide()
+      this.$refs.commentInput.clear()
+      this.showToast(`提交评论‘${content}’成功！`)
     }
   }
 }
@@ -160,7 +185,10 @@ export default {
     width: 100%;
     height: 200px;
     background-color: #333333;
-    position: relative;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 130;
 
     video {
       width: 100%;
@@ -371,6 +399,32 @@ export default {
           line-height: 20px;
           padding: 10px 0;
         }
+        .c-i-b-rc {
+          margin-left: 31px;
+
+          .c-rc-t {
+            font-size: 9px;
+
+            .r-user {
+              color: #0096ff;
+            }
+            .t-user {
+              color: #505050;
+            }
+            .r-time {
+              color: #787878;
+              font-size: 6px;
+              margin-left: 3px;
+            }
+          }
+          .c-rc-content {
+            font-size: 10px;
+            padding: 3px 0;
+          }
+        }
+      }
+      .c-item:last-child {
+        border-bottom: none;
       }
     }
   }

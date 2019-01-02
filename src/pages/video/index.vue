@@ -91,8 +91,15 @@ export default {
   components: {
     videoShare
   },
-
+  onLoad () {
+  },
   created () {
+    let that = this
+    wx.getSystemInfo({
+      success (res) {
+        that.$store.dispatch('setDeviceInfo', res)
+      }
+    })
   },
   computed: {
     ...mapState([
@@ -103,7 +110,7 @@ export default {
     // 触底
     let length = this.$store.state.videoList.length
     let addlist = [{id: length + 1}, {id: length + 2}, {id: length + 3}]
-    this.$store.dispatch('getVideoList', this.videoList.concat(addlist))
+    this.$store.dispatch('setVideoList', this.videoList.concat(addlist))
   },
 
   methods: {
