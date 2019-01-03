@@ -6,7 +6,7 @@
       </div>
       <div @click="clickActive(2)" class="h-item">
         <span :class="{'active': active === 2}">珍藏精选</span>
-        <div class="b-search"><img src="./../../assets/images/box/search-ico-2.png" alt=""></div>
+        <div @click.stop="search" class="b-search"><img src="./../../assets/images/box/search-ico-2.png" alt=""></div>
       </div>
     </header>
     <div class="box-item" v-for="(item, index) in boxList" :key="index">
@@ -106,6 +106,10 @@ export default {
     },
     clickShare () {
       this.$refs.boxShare.show()
+    },
+    search () {
+      console.log('search!')
+      this.toSearch({type: '2'})
     }
   },
 

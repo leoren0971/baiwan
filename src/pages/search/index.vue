@@ -31,8 +31,8 @@
         </div>
       </div>
     </div>
-    <video-list v-if="isSearch && searchType === 1" ref="videoList"></video-list>
-    <box-list v-if="isSearch && searchType === 2" ref="boxList"></box-list>
+    <video-list v-if="isSearch && searchType === '1'" ref="videoList"></video-list>
+    <box-list v-if="isSearch && searchType === '2'" ref="boxList"></box-list>
   </div>
 </template>
 
@@ -43,18 +43,21 @@ export default {
   data () {
     return {
       isSearch: true,
-      searchType: 2 // 1: videos  2: 展柜
+      searchType: '1' // 1: videos  2: 展柜
     }
   },
   components: {
     videoList,
     boxList
   },
+  onLoad (query) {
+    this.searchType = query.searchType
+  },
   onReachBottom () {
     // 触底
-    if (this.searchType === 1) {
+    if (this.searchType === '1') {
       this.$refs.videoList.onReachBottom()
-    } else if (this.searchType === 2) {
+    } else if (this.searchType === '2') {
       this.$refs.boxList.onReachBottom()
     }
   }

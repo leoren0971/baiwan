@@ -17,8 +17,8 @@ Vue.mixin({
     reLaunchPageTo (url) {
       wx.reLaunch({url: url})
     },
-    toSearch () {
-      this.navigatePageTo('../search/main')
+    toSearch ({type}) {
+      this.navigatePageTo(`../search/main?searchType=${type}`)
     },
     toVideoDetail ({index, from, isComment}) {
       this.navigatePageTo(`../videoDetail/main?videoIndex=${index}&from=${from}&isComment=${isComment}`)

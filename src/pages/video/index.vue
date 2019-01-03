@@ -116,7 +116,7 @@ export default {
   methods: {
     search () {
       console.log('search!')
-      this.toSearch()
+      this.toSearch({type: '1'})
     },
     clickToVideoDetail (index, isComment) {
       let obj = {
