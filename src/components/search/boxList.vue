@@ -1,15 +1,6 @@
 <template>
-  <div class="box">
-    <header>
-      <div @click="clickActive(1)" class="h-item">
-        <span :class="{'active': active === 1}">原创精选</span>
-      </div>
-      <div @click="clickActive(2)" class="h-item">
-        <span :class="{'active': active === 2}">珍藏精选</span>
-        <div class="b-search"><img src="./../../assets/images/box/search-ico-2.png" alt=""></div>
-      </div>
-    </header>
-    <div class="box-item" v-for="(item, index) in boxList" :key="index">
+  <div class="boxList">
+    <div class="box-item" v-for="(item, index) in searchBoxList" :key="index">
       <div @click="clickBoxDetail(index, '0')" class="v-i-box">
         <img src="./../../assets/images/ls/hhhp.jpg" alt="" class="video-bg">
       </div>
@@ -48,40 +39,38 @@
 
 <script>
 import { mapState } from 'vuex'
-import boxShare from './../../components/shareCard/boxShare'
+import boxShare from './../shareCard/boxShare'
 export default {
   data () {
     return {
-      active: 1 // 1, 2
     }
   },
-
   components: {
     boxShare
   },
   computed: {
     ...mapState([
-      'boxList'
+      'searchBoxList'
     ])
-  },
-  onReachBottom () {
-    // 触底
-    let length = this.$store.state.boxList.length
-    let addlist = [{id: length + 1}, {id: length + 2}, {id: length + 3}]
-    this.$store.dispatch('setBoxList', this.boxList.concat(addlist))
   },
 
   methods: {
-    clickActive (index) {
-      this.active = index
+    onReachBottom () {
+      // 触底
+      let length = this.$store.state.searchBoxList.length
+      let addlist = [{id: length + 1}, {id: length + 2}, {id: length + 3}]
+      this.$store.dispatch('setSearchBoxList', this.searchBoxList.concat(addlist))
     },
     clickBoxDetail (index, isComment) {
       let obj = {
         index,
-        from: '1',
+        from: '2',
         isComment
       }
       this.toBoxDetail(obj)
+    },
+    clickActive (index) {
+      this.active = index
     },
     clickVant (item, index) {
       let indexItem = item
@@ -96,7 +85,7 @@ export default {
         indexItem.isVanted = true
         this.showToast('点赞成功！')
       }
-      this.$store.dispatch('updateBoxList', {
+      this.$store.dispatch('updateSearchBoxList', {
         index,
         indexItem
       })
@@ -104,7 +93,7 @@ export default {
     clickComment (index) {
       this.clickBoxDetail(index, '1')
     },
-    clickShare () {
+    clickShare (item) {
       this.$refs.boxShare.show()
     }
   },
@@ -114,7 +103,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.box {
+.boxList {
   width: 100%;
   height: 100%;
 

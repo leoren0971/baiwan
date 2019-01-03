@@ -1,19 +1,19 @@
 <template>
-  <div class="box">
-    <header>
-      <div @click="clickActive(1)" class="h-item">
-        <span :class="{'active': active === 1}">原创精选</span>
+  <div class="videoList">
+    <div class="video-item" v-for="(item, index) in searchVideoList" :key="index">
+      <div class="v-i-box">
+        <video
+          v-if="isPlaying&&playIndex===index"
+          id="myVideo"
+          src="http://wxsnsdy.tc.qq.com/105/20210/snsdyvideodownload?filekey=30280201010421301f0201690402534804102ca905ce620b1241b726bc41dcff44e00204012882540400&bizid=1023&hy=SH&fileparam=302c020101042530230204136ffd93020457e3c4ff02024ef202031e8d7f02030f42400204045a320a0201000400"
+          controls
+          :autoplay="true"
+        ></video>
+        <img v-else src="./../../assets/images/ls/hhhp.jpg" alt="" class="video-bg">
+        <div class="video-duration">03:00</div>
+        <div @click="toPlay(index)" class="video-player"><img class="p-ico" src="./../../assets/images/video/player-btn.png" alt=""></div>
       </div>
-      <div @click="clickActive(2)" class="h-item">
-        <span :class="{'active': active === 2}">珍藏精选</span>
-        <div class="b-search"><img src="./../../assets/images/box/search-ico-2.png" alt=""></div>
-      </div>
-    </header>
-    <div class="box-item" v-for="(item, index) in boxList" :key="index">
-      <div @click="clickBoxDetail(index, '0')" class="v-i-box">
-        <img src="./../../assets/images/ls/hhhp.jpg" alt="" class="video-bg">
-      </div>
-      <div @click="clickBoxDetail(index, '0')" class="v-i-info">
+      <div @click="clickToVideoDetail(index, '0')" class="v-i-info">
         <div class="avatar">
           <img src="./../../assets/images/ls/avatar.png" alt="">
         </div>
@@ -39,49 +39,51 @@
               <img src="./../../assets/images/video/share-ico.png" alt="">
             </div>
           </div>
+          <div class="a-label">
+            <div class="a-l-item">高达</div>
+          </div>
         </div>
       </div>
     </div>
-    <box-share ref="boxShare"></box-share>
+    <video-share ref="videoShare"></video-share>
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
-import boxShare from './../../components/shareCard/boxShare'
+import videoShare from './../../components/shareCard/videoShare'
 export default {
   data () {
     return {
-      active: 1 // 1, 2
+      list: []
     }
   },
-
   components: {
-    boxShare
+    videoShare
   },
   computed: {
     ...mapState([
-      'boxList'
+      'searchVideoList'
     ])
   },
-  onReachBottom () {
-    // 触底
-    let length = this.$store.state.boxList.length
-    let addlist = [{id: length + 1}, {id: length + 2}, {id: length + 3}]
-    this.$store.dispatch('setBoxList', this.boxList.concat(addlist))
-  },
-
   methods: {
-    clickActive (index) {
-      this.active = index
+    onReachBottom () {
+      // 触底
+      let length = this.$store.state.searchVideoList.length
+      let addlist = [{id: length + 1}, {id: length + 2}, {id: length + 3}]
+      this.$store.dispatch('setSearchVideoList', this.searchVideoList.concat(addlist))
     },
-    clickBoxDetail (index, isComment) {
+    clickToVideoDetail (index, isComment) {
       let obj = {
         index,
-        from: '1',
+        from: '2',
         isComment
       }
-      this.toBoxDetail(obj)
+      this.toVideoDetail(obj)
+    },
+    toPlay (index) {
+      this.playIndex = index
+      this.isPlaying = true
     },
     clickVant (item, index) {
       let indexItem = item
@@ -96,76 +98,33 @@ export default {
         indexItem.isVanted = true
         this.showToast('点赞成功！')
       }
-      this.$store.dispatch('updateBoxList', {
+      this.$store.dispatch('updateSearchVideoList', {
         index,
         indexItem
       })
     },
     clickComment (index) {
-      this.clickBoxDetail(index, '1')
+      this.clickToVideoDetail(index, '1')
     },
-    clickShare () {
-      this.$refs.boxShare.show()
+    clickShare (item) {
+      console.log(item)
+      this.$refs.videoShare.show()
     }
-  },
-
-  created () {}
+  }
 }
 </script>
 
 <style lang="less" scoped>
-.box {
-  width: 100%;
-  height: 100%;
+.videoList {
+  padding: 15px 0 10px;
 
-  >header {
-    display: flex;
-    text-align: center;
-    padding: 0 60px;
-
-    >div {
-      width: 50%;
-      height: 60px;
-      line-height: 60px;
-      color: #505050;
-      position: relative;
-
-      .b-search {
-        position: absolute;
-        right: -40px;
-        top: 0;bottom: 0;
-        margin: auto 0;
-        display: flex;
-        align-items: center;
-
-        >img {
-          width: 25px;
-          height: 25px;
-        }
-      }
-    }
-    .active {
-      color: #d54321;
-      position: relative;
-    }
-    .active:after {
-      content: "";
-      position: absolute;
-      bottom: -15px;
-      left: 0; right: 0;
-      margin: 0 auto;
-      width: 100%;
-      height: 5px;
-      background-color: #d54321;
-    }
-  }
-  .box-item {
+  .video-item {
     width: 100%;
-    padding: 10px 0 0;
+    padding: 10px 8px 0px;
     border-bottom: 1px solid #969696;
 
     .v-i-box {
-      width: 375px;
+      width: 360px;
       height: 175px;
       background-color: #333333;
       position: relative;
@@ -175,7 +134,7 @@ export default {
         height: 100%;
       }
       .video-bg {
-        width: 375px;
+        width: 360px;
         height: 175px;
       }
       .video-duration {
@@ -203,7 +162,7 @@ export default {
     }
     .v-i-info {
       display: flex;
-      padding: 0 12px 10px;
+      padding-bottom: 10px;
 
       .avatar {
         width: 45px;
@@ -289,6 +248,6 @@ export default {
         }
       }
     }
-  }
+  }      
 }
 </style>

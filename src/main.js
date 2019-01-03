@@ -20,11 +20,11 @@ Vue.mixin({
     toSearch () {
       this.navigatePageTo('../search/main')
     },
-    toVideoDetail (index) {
-      this.navigatePageTo('../videoDetail/main?videoIndex=' + index)
+    toVideoDetail ({index, from, isComment}) {
+      this.navigatePageTo(`../videoDetail/main?videoIndex=${index}&from=${from}&isComment=${isComment}`)
     },
-    toBoxDetail (index) {
-      this.navigatePageTo('../boxDetail/main?boxIndex=' + index)
+    toBoxDetail ({index, from, isComment}) {
+      this.navigatePageTo(`../boxDetail/main?boxIndex=${index}&from=${from}&isComment=${isComment}`)
     },
     myDialog (options, callback, callback2) {
       wx.showModal({

@@ -31,7 +31,7 @@
           <div class="video-duration">03:00</div>
           <div @click="toPlay(index)" class="video-player"><img class="p-ico" src="./../../assets/images/video/player-btn.png" alt=""></div>
         </div>
-        <div @click="toVideoDetail(index)" class="v-i-info">
+        <div @click="clickToVideoDetail(index, '0')" class="v-i-info">
           <div class="avatar">
             <img src="./../../assets/images/ls/avatar.png" alt="">
           </div>
@@ -49,7 +49,7 @@
                 <img v-else src="./../../assets/images/video/vant-ico.png" alt="">
                 <div class="a-i-v-num">9999w</div>
               </div>
-              <div @click.stop="clickComment" class="a-b-item">
+              <div @click.stop="clickComment(index)" class="a-b-item">
                 <img src="./../../assets/images/video/comment.png" alt="">
                 <div class="a-i-v-num">200w</div>
               </div>
@@ -118,6 +118,14 @@ export default {
       console.log('search!')
       this.toSearch()
     },
+    clickToVideoDetail (index, isComment) {
+      let obj = {
+        index,
+        from: '1',
+        isComment
+      }
+      this.toVideoDetail(obj)
+    },
     toPlay (index) {
       this.playIndex = index
       this.isPlaying = true
@@ -140,8 +148,8 @@ export default {
         indexItem
       })
     },
-    clickComment () {
-      this.showToast('评论了！')
+    clickComment (index) {
+      this.clickToVideoDetail(index, '1')
     },
     clickShare () {
       this.$refs.videoShare.show()

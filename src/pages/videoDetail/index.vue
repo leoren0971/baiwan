@@ -102,6 +102,8 @@ import commentInput from '@/components/comment/commentInput'
 export default {
   data () {
     return {
+      videoFrom: 1, // 1: videoList   2: searchList
+      isComment: '0', // 是否立即评论 0：否 1：是
       videoId: null,
       videoIndex: null,
       videoInfo: {id: 1, isVanted: false},
@@ -116,10 +118,15 @@ export default {
   },
   computed: {
     ...mapState([
-      'videoList'
+      'videoList',
+      'searchVideoList'
     ]),
     cVideoInfo () {
-      return this.videoList[this.videoIndex]
+      if (this.videoFrom === '1') {
+        return this.videoList[this.videoIndex]
+      } else if (this.videoFrom === '2') {
+        return this.searchVideoList[this.videoIndex]
+      }
     }
   },
 
@@ -128,8 +135,11 @@ export default {
     console.log('doneWindowHeight', this.$store.getters.doneWindowHeight)
     console.log('doneMyWindowHeight', this.$store.getters.doneMyWindowHeight)
     let info = query.videoIndex
+    this.videoFrom = query.from
+    this.isComment = query.isComment
     this.videoIndex = parseInt(info)
     this.contHeight = this.$store.getters.doneWindowHeight - 180
+    console.log(this)
   },
   onUnload () {
     this.isPlaying = false
@@ -157,7 +167,13 @@ export default {
         indexItem.isVanted = true
         this.showToast('点赞成功！')
       }
-      this.$store.dispatch('updateVideoList', {
+      let actionUpdateVideoList = 'updateVideoList'
+      if (this.videoFrom === '1') {
+        actionUpdateVideoList = 'updateVideoList'
+      } else if (this.videoFrom === '2') {
+        actionUpdateVideoList = 'updateSearchVideoList'
+      }
+      this.$store.dispatch(actionUpdateVideoList, {
         index: this.videoIndex,
         indexItem
       })

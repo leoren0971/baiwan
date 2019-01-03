@@ -54,6 +54,8 @@ export default {
   data () {
     return {
       boxIndex: null,
+      boxFrom: 1, // 1: videoList   2: searchList
+      isComment: '0', // 是否立即评论 0：否 1：是
       imgList: ['', '', '', '', '', '']
     }
   },
@@ -64,15 +66,22 @@ export default {
   },
   computed: {
     ...mapState([
-      'videoList'
+      'boxList',
+      'searchBoxList'
     ]),
     cBoxInfo () {
-      return this.videoList[this.boxIndex]
+      if (this.boxFrom === '1') {
+        return this.boxList[this.boxIndex]
+      } else if (this.boxFrom === '2') {
+        return this.searchBoxList[this.boxIndex]
+      }
     }
   },
   onLoad (query) {
     console.log('onLoad', query)
     let info = query.boxIndex
+    this.boxFrom = query.from
+    this.isComment = query.isComment
     this.boxIndex = parseInt(info)
   },
   methods: {
@@ -92,7 +101,13 @@ export default {
         indexItem.isVanted = true
         this.showToast('点赞成功！')
       }
-      this.$store.dispatch('updateVideoList', {
+      let actionUpdateBoxList = 'updateBoxList'
+      if (this.videoFrom === '1') {
+        actionUpdateBoxList = 'updateBoxList'
+      } else if (this.videoFrom === '2') {
+        actionUpdateBoxList = 'updateSearchBoxList'
+      }
+      this.$store.dispatch(actionUpdateBoxList, {
         index: this.boxIndex,
         indexItem
       })
